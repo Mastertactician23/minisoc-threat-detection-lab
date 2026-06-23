@@ -1,0 +1,17 @@
+version: '3'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.0
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    networks: [soc-lab]
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.12.0
+    networks: [soc-lab]
+    ports: ["5601:5601"]
+    depends_on: [elasticsearch]
+networks:
+  soc-lab:
+    external: true
